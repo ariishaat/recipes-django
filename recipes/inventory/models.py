@@ -1,25 +1,40 @@
-from django.db import models
+from django.db import models, transaction
 
 # Create your models here.
 
-class Ingredients(models.Model):
+class Ingredient(models.Model):
     name = models.CharField(max_length=200)
-    pricePerUnit = models.DecimalField(max_digits=10, decimal_places=2)
     qty = models.PositiveIntegerField()
+    units = models.CharField(max_length=200, default="unit")
+    price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return self.name
 
-class MenuItem(models.model):
+class MenuItem(models.Model):
     name = models.CharField(max_length=200)
     pricePerUnit = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __str__(self):
         return self.name
+    def inventoryUpdate(self):
+        with transaction.atomic():
+            recipe_reqs = RecipeReq.objects.filter(menu_item=self)
+
+            for item in recipe_reqs:
+                ingredient = item.ingredient
+                req_qty = item.qty_req
+
+                if ingredient.qty < req_qty:
+                    raise ValueError(f"Not enough {ingredient.name} in inventory!")
+                ingredient.qty -= req_qty
+                ingredient.save()
+            Purchase.objects.create(menu_item=self)
+
 
 class RecipeReq(models.Model):
     menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='recipe_requirements')
-    ingredient = models.ForeignKey(Ingredients, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     qty_req = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
@@ -28,11 +43,8 @@ class RecipeReq(models.Model):
     def __str__(self):
         return f'{self.menu_item} requires {self.qty_req} of {self.ingredient}'
         
-class Expense(models.Model):
-    date = models.DateField(auto_now_add=True)
-    menu_time = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
-    qty = models.PositiveBigIntegerField()
-    total_price = models.DecimalField(max_digits=10,decimal_places=2)
-
+class Purchase(models.Model):
+    date = models.DateTimeField(auto_now_add=True)
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     def __str__(self):
-        return f'Purchase of {self.menu_time} on {self.date}'
+        return f'Customer purchased {self.menu_item} on {self.date}!'
