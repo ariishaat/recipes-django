@@ -46,5 +46,27 @@ class RecipeReq(models.Model):
 class Purchase(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+
+    @classmethod
+    def revenue(cls):
+        total = cls.objects.aggregate(total=models.Sum('menu_item__pricePerUnit'))['total']
+        return total or 0 #zero for no purchases
+    
+    @classmethod
+    def cost(cls):
+        total_cost = 0
+        purchases = cls.objects.all()
+        for purchase in purchases:
+            cost = sum(
+                req.qty_req * req.ingredient.price for req in purchase.menu_item.recipe_requirements.all())
+            total_cost += cost
+        return total_cost
+    
+    @classmethod
+    def profit(cls):
+        revenue = cls.revenue()
+        cost = cls.cost()
+        return revenue - cost
+
     def __str__(self):
         return f'Customer purchased {self.menu_item} on {self.date}!'
