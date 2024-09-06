@@ -20,11 +20,10 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('inventory.html', views.inventory_view, name='inventory_view'),
-    path('delete_ingredient.html', views.delete_ingredient, name='delete_ingredient'),
-    path('menu.html', views.menu_view, name='menu_view'),
-    path('recipes.html', views.recipes_view, name='recipes_view'),
-    path('purchases.html', views.purchases_view, name='purchases_view'),
-    path('revenue.html', views.view_revenue, name='view_revenue'),
-    path('profit.html', views.view_profit, name='view_profit'),
+    path('inventory/', views.inventory_view, name='inventory_view'),
+    path('delete_ingredient/<int:ingredient_id>/', views.delete_ingredient, name='delete_ingredient'),
+    path('menu/', views.menu_view, name='menu_view'),
+    path('recipes/', views.recipes_view, name='recipes_view'),
+    path('purchases/', views.purchases_view, name='purchases_view'),
+    path('finances/', views.view_finances, name='view_finances'),
 ]

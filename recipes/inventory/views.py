@@ -29,10 +29,7 @@ def purchases_view(request):
     purchases_made = Purchase.objects.all()
     return render(request, 'purchases.html', {'purchases': purchases_made})
 
-def view_revenue(request):
+def view_finances(request):
     revenue = Purchase.revenue()
-    return render(request, 'revenue.html', {'revenue': revenue})
-
-def view_profit(request):
     profit = Purchase.profit()
-    return render(request, 'profit.html', {'profit': profit})
+    return render(request, 'finances.html', {'revenue': revenue,'profit': profit})
