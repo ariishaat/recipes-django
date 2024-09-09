@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Recipes Page{% endblock %}
+
+{% block content %}
+<h2 class="page-head">Recipes Page</h2>
+
+<div class="container">
+    <div class="row">
+        {% if group_recipes %}
+            {% for menu_item, recipes_list in group_recipes.items %}
+                <div class="col-md-12">
+                    <h3>{{ menu_item.name }}</h3>
+                    <ul>
+                        {% for recipe in recipes_list %}
+                            <li>
+                                Ingredient: {{ recipe.ingredient.name }} <br>
+                                Quantity Required: {{ recipe.qty_req }} {{ recipe.ingredient.units }}
+                            </li>
+                        {% empty %}
+                            <li>No ingredients available for this menu item.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No recipes available.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

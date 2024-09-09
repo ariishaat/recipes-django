@@ -1,7 +1,32 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}MENU{% endblock %}
+{% block title %}Menu{% endblock %}
+
 
 {% block content %}
-<h1>Menu Page</h1>
+<div class="menu-container">
+    <h2 class="page-head">Menu Page</h2>
+    <table class="table menu-table">
+        <thead>
+            <tr>
+                <th>Menu Item</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in menu %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>${{ item.pricePerUnit }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">No menu items available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 {% endblock %}

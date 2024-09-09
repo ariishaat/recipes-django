@@ -7,3 +7,18 @@
 .page-label{
     text-align: center;
 }
+
+.menu-container{
+    padding-left: 5%;
+    padding-right: 5%;
+    color: #432818;
+    text-align: center;
+}
+
+.menu-table{
+    background-color: #a68a64; /* Light cream background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 2px transparent;
+
+}
