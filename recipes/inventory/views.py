@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from inventory.models import Ingredient, MenuItem, RecipeReq, Purchase
 
 # Create your views here.
-
+def home(request):
+    return render(request, 'home.html')
 
 # Resturant pre-selected Queries:
 def inventory_view(request):
