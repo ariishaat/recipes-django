@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Welcome to the Restaurant Management System</h1>
-<p>Manage your inventory, menu, purchases, and financials with ease.</p>
+<h1 class="page-head">🥘 Welcome to My Resturant Home Page! 👩🏻‍🍳</h1>
+<h4 class="page-label">Use the navigation menu above to view the other management pages.</h4>
+<img src="{% static 'images/resturant-pic.jpg' %}" class="img-fluid" alt="Resutant picture">
+
+
 {% endblock %}
