@@ -1,9 +1,32 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Expenses{% endblock %}
+{% block title %}Item Purchases{% endblock %}
 
 
 {% block content %}
+<h2 class="page-head">Customer Purchases Tracker </h2>
 
+<div class="menu-container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Purchased Item</th>
+                <th>Date of Purchase</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in purchases %}
+                <tr>
+                    <td>{{ item.menu_item}}</td>
+                    <td>{{ item.date }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No Purchases items to show.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

@@ -66,7 +66,7 @@ class Purchase(models.Model):
     def profit(cls):
         revenue = cls.revenue()
         cost = cls.cost()
-        return revenue - cost
+        return round(revenue - cost,2)
 
     def __str__(self):
         return f'Customer purchased {self.menu_item} on {self.date}!'

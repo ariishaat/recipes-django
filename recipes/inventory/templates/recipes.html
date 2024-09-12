@@ -1,32 +1,45 @@
 {% extends 'base.html' %}
 {% load static %}
-
-{% block title %}Recipes Page{% endblock %}
+{% block title %}Recipes{% endblock %}
 
 {% block content %}
 <h2 class="page-head">Recipes Page</h2>
-
 <div class="container">
-    <div class="row">
-        {% if group_recipes %}
-            {% for menu_item, recipes_list in group_recipes.items %}
-                <div class="col-md-12">
-                    <h3>{{ menu_item.name }}</h3>
-                    <ul>
-                        {% for recipe in recipes_list %}
-                            <li>
-                                Ingredient: {{ recipe.ingredient.name }} <br>
-                                Quantity Required: {{ recipe.qty_req }} {{ recipe.ingredient.units }}
-                            </li>
-                        {% empty %}
-                            <li>No ingredients available for this menu item.</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No recipes available.</p>
-        {% endif %}
-    </div>
+<div class="row">
+<div class="container mt-3">
+    {% for menu_item, recipes in group_recipes.items %}
+      <div class="card mb-3 text-center">
+        <img class="card-img-top" src="{% static 'images/djaffa-cake.jpg' %}" alt="Django Djaffa Cake">
+
+        <div class="card-header">
+          <h4>{{ menu_item.name }}</h4>
+          <p>Price per unit: {{ menu_item.pricePerUnit }}</p>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Ingredient</th>
+                <th>Quantity Required</th>
+                <th>Units</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for recipe in recipes %}
+                <tr>
+                  <td>{{ recipe.ingredient.name }}</td>
+                  <td>{{ recipe.qty_req }}</td>
+                  <td>{{ recipe.ingredient.units }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% empty %}
+      <p>No recipes available.</p>
+    {% endfor %}
+</div>
+</div>
 </div>
 {% endblock %}

@@ -1,7 +1,33 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}FINANCES{% endblock %}
 
 {% block content %}
-<h1>Welcome to the Restaurant Management System</h1>
+<h2 class="page-head">Resturant Financial Tracker </h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card mb-4">
+                <img class="card-img-top" src="{% static 'images/fin-card-1.jpg' %}" alt="">
+                <div class="card-body">
+                    <h3 class="card-title">Revenue</h3>
+                    <h5>${{ revenue }}</h5>
+                </div>
+            </div>
+      </div>
+  
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card mb-4">
+                <img class="card-img-top" src="{% static 'images/fin-card-2.jpg' %}" alt="">
+                <div class="card-body">
+                    <h3 class="card-title">Profit</h3>
+                    <h5>${{ profit }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
 {% endblock %}
