@@ -1,8 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from inventory.models import Ingredient, MenuItem, RecipeReq, Purchase
+from django.contrib.auth.decorators import user_passes_test
 from itertools import groupby
 from operator import attrgetter
+
+from inventory.models import Ingredient, MenuItem, RecipeReq, Purchase
+from .forms import *
 
 # Create your views here.
 def home(request):
@@ -40,3 +43,24 @@ def view_finances(request):
     revenue = Purchase.revenue()
     profit = Purchase.profit()
     return render(request, 'finances.html', {'revenue': revenue,'profit': profit})
+
+def admin_login(request):
+    return render(request,'admin-login.html')
+
+## admin access only views:
+
+def is_admin(user):
+    # check if user is admin
+    return user.is_superuser
+
+@user_passes_test(is_admin)
+def add_ingredient(request):
+    if request.method == "POST":
+        form = addIngredients(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('inventory_view')
+    else:
+        form = addIngredients()
+    return render(request, 'add-ingredient.html', {'form': form})
+    

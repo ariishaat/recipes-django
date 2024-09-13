@@ -5,8 +5,23 @@
 
 {% block content %}
 <h1 class="page-head">🥘 Welcome to My Resturant Home Page! 👩🏻‍🍳</h1>
+
+{% if user.is_authenticated %}
+<h5 class="login-label">Hi {{ user.username }}!</h5>
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button class="log-btn" type="submit">Log Out</button>
+  </form>
+
+{% else %}
+<h5 class="page-label">You are not logged in</h5>
+<a class="nav-link login-label" href="{% url 'login' %}">Admin Log In</a>
+{% endif %}
+
 <h4 class="page-label">Use the navigation menu above to view the other management pages.</h4>
+
 <img src="{% static 'images/resturant-pic.jpg' %}" class="img-fluid" alt="Resutant picture">
+
 
 
 {% endblock %}

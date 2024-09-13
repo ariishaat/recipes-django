@@ -1,3 +1,7 @@
+.nav-link{
+    color: #7f5539;
+}
+
 .page-head{
     padding: 5%;
     color: #432818;
@@ -5,6 +9,28 @@
 }
 
 .page-label{
+    text-align: center;
+}
+
+.login-label{
+    text-align: center;
+}
+
+.log-btn{
+    display: block;
+    margin: auto;
+    border-radius: 10px;
+    background-color: #99582a;
+    color: #ffe6a7;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    width: 80px;
+    height: 40px;
+}
+
+.form-style{
+    font-weight: bold;
     text-align: center;
 }
 
@@ -20,9 +46,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     border: 2px transparent;
-
 }
-
 
 .fin-card{
     width: 18rem; 
@@ -32,3 +56,4 @@
 .card-container{
     text-align: center;
 }
+

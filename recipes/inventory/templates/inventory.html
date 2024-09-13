@@ -7,6 +7,12 @@
     <h2 class="page-head">Inventory Page</h2>
     <h4 class="page-label">This page shows what is available in the kitchen.</h4>
 
+    {% if user.is_superuser %}
+    <a class="nav-link" href="{% url 'add_ingredient' %}">Add Ingredients</a>
+    <a class="nav-link" href="{% url 'add_ingredient' %}">Add Ingredients</a>
+    {% endif %}
+    
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -32,8 +38,5 @@
         </tbody>
     </table>
 </div>
-
-
-
 
 {% endblock %}
