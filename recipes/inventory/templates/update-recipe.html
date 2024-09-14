@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Update Recipe Requirements {% endblock %}
+
+
+{% block content %}
+<h2 class="page-head">🍛 Update Recipe Requirements 🗒️</h2>
+
+<h3>Recipe Requirement:</h3>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Add Requirement</button>
+</form>
+
+{% endblock %}

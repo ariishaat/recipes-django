@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Update Menu{% endblock %}
+
+{% block content %}
+<h1 class="page-head">📜 Add New Item to Menu 📜</h1>
+
+  <h3>New Menu Item:</h3>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add to Menu</button>
+  </form>
+
+{% endblock %}

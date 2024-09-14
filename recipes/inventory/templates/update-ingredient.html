@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Update Ingredient{% endblock %}
+
+{% block content %}
+<h1 class="page-head">Update or Delete an Ingredient</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" name="update" class="btn btn-primary">Update Ingredient</button>
+    <button type="submit" name="delete" class="btn btn-danger">Delete Ingredient</button>
+    <a href="{% url 'inventory_view' %}" class="btn btn-secondary">Cancel</a>
+
+  </form>
+
+{% endblock %}

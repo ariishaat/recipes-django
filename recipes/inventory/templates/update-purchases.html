@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Update Purchase History{% endblock %}
+
+{% block content %}
+<h1 class="page-head">💰 Update Purchase History 📝</h1>
+
+  <h3>New Purchase:</h3>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Purchase</button>
+  </form>
+
+{% endblock %}

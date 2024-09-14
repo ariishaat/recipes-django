@@ -4,24 +4,15 @@ from django.contrib.auth.decorators import user_passes_test
 from itertools import groupby
 from operator import attrgetter
 
-from inventory.models import Ingredient, MenuItem, RecipeReq, Purchase
+from .models import Ingredient, MenuItem, RecipeReq, Purchase
 from .forms import *
 
-# Create your views here.
 def home(request):
     return render(request, 'home.html')
 
-# Resturant pre-selected Queries:
 def inventory_view(request):
     current_inventory = Ingredient.objects.all()
     return render(request, 'inventory.html', {'inventory': current_inventory})
-
-def delete_ingredient(request, ingredient_id):
-    ingredient = get_object_or_404(Ingredient, id=ingredient_id)
-    if request.method == "POST":
-        ingredient.delete()
-        return redirect('inventory_view')
-    return render(request, 'delete_ingredient.html', {'inventory': ingredient})
 
 def menu_view(request):
     menu = MenuItem.objects.all()
@@ -47,11 +38,23 @@ def view_finances(request):
 def admin_login(request):
     return render(request,'admin-login.html')
 
+
 ## admin access only views:
 
 def is_admin(user):
     # check if user is admin
     return user.is_superuser
+
+@user_passes_test(is_admin)
+def add_menu(request):
+    if request.method == "POST":
+        form = addMenu(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('menu_view')
+    else:
+        form = addMenu()
+    return render(request, 'update-menu.html', {'form': form})
 
 @user_passes_test(is_admin)
 def add_ingredient(request):
@@ -63,4 +66,48 @@ def add_ingredient(request):
     else:
         form = addIngredients()
     return render(request, 'add-ingredient.html', {'form': form})
+
+@user_passes_test(is_admin)
+def update_ingredient(request, ingredient_id):
+    ingredient = get_object_or_404(Ingredient, id=ingredient_id)
+
     
+    if request.method == "POST":
+        ## to update ingredient:
+        if 'update' in request.POST:
+            form = updateIngredients(request.POST, instance=ingredient)
+            if form.is_valid():
+                form.save()
+                return redirect('inventory_view')
+        ##to delete ingredient:
+        elif 'delete' in request.POST:
+            ingredient.delete()
+            return redirect('inventory_view')
+    else: 
+        form = updateIngredients(instance=ingredient)
+    
+    return render(request, 'update-ingredient.html', {'form': form, 'inventory': ingredient})
+
+@user_passes_test(is_admin)
+def update_recipe(request):
+    if request.method == "POST":
+        form = updateRecipeReq(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('recipes_view')
+    else:
+        form = updateRecipeReq()
+    return render(request, 'update-recipe.html', {'form': form})
+
+@user_passes_test(is_admin)
+def add_purchase(request):
+    if request.method == "POST":
+        form = addPurchase(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('purchases_view')
+    else:
+        form = addPurchase()
+    return render(request, 'update-purchases.html', {'form': form})
+
+

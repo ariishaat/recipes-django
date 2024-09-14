@@ -1,4 +1,5 @@
 from django.db import models, transaction
+from django.utils import timezone
 
 # Create your models here.
 
@@ -31,7 +32,6 @@ class MenuItem(models.Model):
                 ingredient.save()
             Purchase.objects.create(menu_item=self)
 
-
 class RecipeReq(models.Model):
     menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='recipe_requirements')
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
@@ -44,7 +44,7 @@ class RecipeReq(models.Model):
         return f'{self.menu_item} requires {self.qty_req} of {self.ingredient}'
         
 class Purchase(models.Model):
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now)
     menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
 
     @classmethod

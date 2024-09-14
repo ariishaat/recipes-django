@@ -7,6 +7,11 @@
 {% block content %}
 <div class="menu-container">
     <h2 class="page-head">Menu Page</h2>
+
+    {% if user.is_superuser %}
+    <a class="nav-link" href="{% url 'add_menu' %}">Add Menu Item</a>
+    {% endif %}
+
     <table class="table menu-table">
         <thead>
             <tr>

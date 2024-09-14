@@ -23,11 +23,15 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path('', views.home, name='home'),
     path('inventory/', views.inventory_view, name='inventory_view'),
-    path('delete_ingredient/<int:ingredient_id>/', views.delete_ingredient, name='delete_ingredient'),
     path('menu/', views.menu_view, name='menu_view'),
     path('recipes/', views.recipes_view, name='recipes_view'),
     path('purchases/', views.purchases_view, name='purchases_view'),
     path('finances/', views.view_finances, name='view_finances'),
 
     path('add-ingredient/', views.add_ingredient, name='add_ingredient'),
+    path('update-menu/', views.add_menu, name='add_menu'),
+    path('update-recipe/', views.update_recipe, name='update_recipe'),
+    path('update-purchases/', views.add_purchase, name='add_purchase'),
+    path('update-ingredient/<int:ingredient_id>/', views.update_ingredient, name='update_ingredient'),
+    ## ^ has both delete + update forms on one page
 ]

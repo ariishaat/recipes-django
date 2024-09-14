@@ -9,9 +9,7 @@
 
     {% if user.is_superuser %}
     <a class="nav-link" href="{% url 'add_ingredient' %}">Add Ingredients</a>
-    <a class="nav-link" href="{% url 'add_ingredient' %}">Add Ingredients</a>
     {% endif %}
-    
 
     <table class="table table-striped">
         <thead>
@@ -20,6 +18,11 @@
                 <th>Quantity</th>
                 <th>Unit</th>
                 <th>Unit Price</th>
+                <th>
+                    {% if user.is_superuser %}
+                    Update Ingredient
+                    {% endif %}
+                </td>
             </tr>
         </thead>
         <tbody>
@@ -29,11 +32,17 @@
                     <td>{{ item.qty }}</td>
                     <td>{{ item.units }}</td>
                     <td>${{ item.price }}</td>
+                    <td>
+                        {% if user.is_superuser %}
+                        <a href="{% url 'update_ingredient' item.id %}" class="btn btn-primary"> Manage </a>
+                        {% endif %}
+                    </td>
                 </tr>
             {% empty %}
                 <tr>
                     <td colspan="4">No ingredients available.</td>
                 </tr>
+
             {% endfor %}
         </tbody>
     </table>
